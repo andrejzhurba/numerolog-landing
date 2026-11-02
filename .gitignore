@@ -1,3 +1,4 @@
 # Full third-party browser captures can contain tokens or transient URLs.
 reference-evidence.json
+tmp/
 

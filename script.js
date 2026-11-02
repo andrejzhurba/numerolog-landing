@@ -1,183 +1,25 @@
-const services = {
-  personal: {
-    title: "Личный код",
-    description: "Разбор личности, талантов, ресурсов и жизненных задач по дате рождения.",
-  },
-  relationship: {
-    title: "Код отношений",
-    description: "Разбор совместимости, сценариев пары и точек взаимопонимания.",
-  },
-  finance: {
-    title: "Финансовый код",
-    description: "Разбор финансовых сценариев, способов реализации и точек роста.",
-  },
-  school: {
-    title: "Школа нумерологии",
-    description: "Обучение в мини-группе или личное наставничество с Еленой.",
-  },
+const config=window.SITE_CONFIG||{};
+const products={
+ matrix:{title:"Полный письменный разбор матрицы",price:"30 €",lead:"Персональный разбор объёмом более 20 страниц.",items:["Личность, духовность, деньги и отношения","Ресурсы и вопросы здоровья — только в рамках авторской методики","Высшая задача души, кармические и родовые темы","Чакры и персональные рекомендации"]},
+ child:{title:"Детская матрица",price:"30 €",lead:"Более 15 страниц для родителей, которые хотят лучше понимать ребёнка.",items:["Характер, сильные стороны и система талантов","Подходящие кружки, направления и профессии","Совместимость с родителями и возможные точки конфликта","Ключевые возрастные периоды: 10, 18, 25 и 33 года"]},
+ roadmap:{title:"Дорожная карта на 2027 год",price:"50 €",lead:"Персональные ориентиры на год без фатальных обещаний.",items:["Энергии и возможные поворотные точки года","Прогноз на 12 месяцев: плюсы, риски и рекомендации","Алгоритм постановки целей на каждый месяц","Персональный график энергии года"]},
+ compatibility:{title:"Совместимость партнёров",price:"40 €",lead:"Разбор динамики пары по двум датам рождения.",items:["Смысл встречи и общие ценности","Динамика отношений и конфликтные точки","Способы гармонизации и темы семьи","Итоговые рекомендации в рамках авторской системы"]},
+ consultation:{title:"Индивидуальная консультация",price:"40 €",lead:"45–70 минут в видео-, голосовом формате или чате.",items:["Личность, деньги, отношения, карьера и предназначение","Разбор текущей ситуации и ответы на вопросы","Письменные тезисы и дополнительные материалы","Одна неделя поддержки в чате"]},
+ base:{title:"Обучение «База»",price:"300 €",lead:"Системное обучение нумерологии в мини-группе до 6 человек.",items:["8 тем: от личности и предназначения до прогнозирования","Видеоуроки и рабочие материалы","Практические задания с проверкой и обратная связь","Сертификат после завершения программы"]},
+ profi:{title:"Обучение «Профи»",price:"1000 €",lead:"Индивидуальная программа из 12 углублённых модулей.",items:["Личность, родовые темы, бизнес, отношения и миссия","Прогнозирование, циклы, имя, фамилия и цвет числа","Практика расчётов и авторские методики","Месяц поддержки и сертификат"]},
+ year:{title:"Годовое сопровождение",price:"3000 €",lead:"Индивидуальная работа в течение года: 48 еженедельных встреч.",items:["Глубокое нумерологическое исследование","Личные стратегии и план движения от текущей точки к цели","Практики, прогнозирование и персональные рекомендации","Регулярная поддержка без гарантии конкретного результата"]}
 };
-
-const numberMeanings = {
-  1: ["Инициатор", "Ваша сила — начинать, вести и создавать собственный путь. Важно развивать самостоятельность, не превращая её в одиночество."],
-  2: ["Дипломат", "Вы тонко чувствуете людей и умеете создавать гармонию. Ваш рост начинается там, где мягкость сочетается с личными границами."],
-  3: ["Творец", "Ваш ресурс — идеи, общение и самовыражение. Важно не распыляться и давать таланту устойчивую форму."],
-  4: ["Созидатель", "Вы умеете превращать хаос в систему. Надёжность — ваш дар, а гибкость помогает ему не стать ограничением."],
-  5: ["Исследователь", "Движение, свобода и новый опыт заряжают вас. Главная задача — сохранять внутреннюю опору среди перемен."],
-  6: ["Хранитель", "Вы создаёте красоту, близость и пространство заботы. Помните: забота о себе так же важна, как поддержка других."],
-  7: ["Аналитик", "Вам важно добираться до сути и доверять внутреннему знанию. Ваш путь — соединять глубину анализа с живым опытом."],
-  8: ["Стратег", "Вы чувствуете масштаб, ресурсы и закономерности результата. Сила раскрывается через честное управление и баланс контроля."],
-  9: ["Гуманист", "Вы видите широкую картину и умеете вдохновлять. Ваша задача — помогать миру, сохраняя собственные силы и границы."],
-  11: ["Проводник", "Вы чувствительны к идеям и людям, умеете вдохновлять и подсвечивать новые смыслы. Интуиции нужна земная опора."],
-  22: ["Архитектор", "Вы способны воплощать большие идеи в работающие системы. Масштаб раскрывается через дисциплину и сотрудничество."],
-};
-
-const body = document.body;
-const menuButton = document.querySelector(".menu-toggle");
-const nav = document.querySelector(".site-nav");
-const serviceModal = document.querySelector("#service-modal");
-const legalModal = document.querySelector("#legal-modal");
-const paymentLink = document.querySelector("#payment-link");
-const paymentNote = document.querySelector("#payment-note");
-const serviceField = document.querySelector("#service-field");
-let lastFocusedElement = null;
-
-document.querySelector("#year").textContent = new Date().getFullYear();
-document.querySelector("#birthdate").max = new Date().toISOString().slice(0, 10);
-
-const revealObserver = new IntersectionObserver(
-  (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("visible")),
-  { threshold: 0.12 },
-);
-document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
-
-window.addEventListener("scroll", () => {
-  const maximum = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = maximum > 0 ? (window.scrollY / maximum) * 100 : 0;
-  document.querySelector(".page-progress").style.width = `${progress}%`;
-});
-
-menuButton.addEventListener("click", () => {
-  const open = nav.classList.toggle("open");
-  menuButton.setAttribute("aria-expanded", String(open));
-});
-nav.querySelectorAll("a").forEach((link) =>
-  link.addEventListener("click", () => {
-    nav.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }),
-);
-
-function openModal(modal) {
-  lastFocusedElement = document.activeElement;
-  modal.hidden = false;
-  body.classList.add("modal-open");
-  modal.querySelector(".modal-close").focus();
-}
-
-function closeModal(modal) {
-  modal.hidden = true;
-  body.classList.remove("modal-open");
-  lastFocusedElement?.focus();
-}
-
-document.querySelectorAll("[data-service]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const key = button.dataset.service;
-    const service = services[key];
-    const link = window.SITE_CONFIG?.paymentLinks?.[key]?.trim();
-    document.querySelector("#modal-title").textContent = service.title;
-    document.querySelector("#modal-description").textContent = service.description;
-    serviceField.value = service.title;
-
-    if (link) {
-      paymentLink.textContent = "Перейти к оплате";
-      paymentLink.href = link;
-      paymentLink.target = "_blank";
-      paymentLink.rel = "noopener noreferrer";
-      paymentNote.textContent = "Оплата откроется на защищённой странице платёжного сервиса.";
-    } else {
-      paymentLink.textContent = "Оставить заявку";
-      paymentLink.href = "#contact";
-      paymentLink.removeAttribute("target");
-      paymentLink.removeAttribute("rel");
-      paymentNote.textContent = "Платёжная ссылка появится после подключения мерчант-аккаунта. Сейчас можно отправить заявку.";
-    }
-    openModal(serviceModal);
-  });
-});
-
-document.querySelectorAll("[data-close-modal]").forEach((element) =>
-  element.addEventListener("click", () => closeModal(serviceModal)),
-);
-document.querySelector("#modal-request").addEventListener("click", () => {
-  closeModal(serviceModal);
-  document.querySelector("#contact").scrollIntoView({ behavior: "smooth" });
-});
-paymentLink.addEventListener("click", () => {
-  if (paymentLink.getAttribute("href") === "#contact") closeModal(serviceModal);
-});
-
-document.querySelector("[data-open-legal]").addEventListener("click", () => openModal(legalModal));
-document.querySelectorAll("[data-close-legal]").forEach((element) =>
-  element.addEventListener("click", () => closeModal(legalModal)),
-);
-
-document.addEventListener("keydown", (event) => {
-  if (event.key !== "Escape") return;
-  if (!serviceModal.hidden) closeModal(serviceModal);
-  if (!legalModal.hidden) closeModal(legalModal);
-});
-
-function reduceNumber(total) {
-  if (total === 11 || total === 22) return total;
-  while (total > 9) {
-    total = String(total)
-      .split("")
-      .reduce((sum, digit) => sum + Number(digit), 0);
-    if (total === 11 || total === 22) return total;
-  }
-  return total;
-}
-
-document.querySelector("#number-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const value = document.querySelector("#birthdate").value;
-  if (!value) return;
-  const total = value.replaceAll("-", "").split("").reduce((sum, digit) => sum + Number(digit), 0);
-  const number = reduceNumber(total);
-  const [title, text] = numberMeanings[number];
-  document.querySelector("#result-number").textContent = number;
-  document.querySelector("#result-title").textContent = title;
-  document.querySelector("#result-text").textContent = text;
-  document.querySelector("#number-form").hidden = true;
-  document.querySelector("#number-result").hidden = false;
-});
-
-const contactForm = document.querySelector("#contact-form");
-contactForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const status = document.querySelector("#form-status");
-  const button = contactForm.querySelector("button[type='submit']");
-  status.textContent = "Отправляем…";
-  button.disabled = true;
-
-  try {
-    const isLocalPreview = location.protocol === "file:" || ["127.0.0.1", "localhost"].includes(location.hostname);
-    if (isLocalPreview) {
-      await new Promise((resolve) => setTimeout(resolve, 450));
-    } else {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(contactForm)).toString(),
-      });
-      if (!response.ok) throw new Error("form-submit-failed");
-    }
-    status.textContent = "Спасибо! Заявка принята. Мы свяжемся с вами.";
-    contactForm.reset();
-  } catch {
-    status.textContent = "Не удалось отправить. Напишите Елене в Instagram — ссылка слева.";
-  } finally {
-    button.disabled = false;
-  }
-});
+const contactUrl=config.telegramUrl||config.telegramFallback||"#contact";
+document.querySelectorAll("[data-contact-link]").forEach(a=>{a.href=contactUrl;if(contactUrl.startsWith("http")){a.target="_blank";a.rel="noopener noreferrer"}});
+document.querySelectorAll("[data-free-link]").forEach(a=>a.href=config.freeAnalysisUrl||"https://t.me/bazovyi_kod_bot");
+const note=document.querySelector("[data-contact-note]");if(note&&config.telegramUrl)note.hidden=true;
+const header=document.querySelector("[data-header]"),progress=document.querySelector(".page-progress");
+function onScroll(){const y=scrollY;header?.classList.toggle("scrolled",y>20);if(progress)progress.style.width=`${y/(document.documentElement.scrollHeight-innerHeight)*100}%`}
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+const menu=document.querySelector(".menu-toggle"),nav=document.querySelector(".site-nav");menu?.addEventListener("click",()=>{const open=nav.classList.toggle("open");menu.setAttribute("aria-expanded",String(open))});nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false")}));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+const modal=document.querySelector("#service-modal"),title=document.querySelector("#modal-title"),lead=document.querySelector("#modal-lead"),list=document.querySelector("#modal-list"),price=document.querySelector("#modal-price"),modalContact=document.querySelector("#modal-contact");let lastFocus;
+function openModal(key){const p=products[key];if(!p)return;lastFocus=document.activeElement;title.textContent=p.title;lead.textContent=p.lead;price.textContent=p.price;list.innerHTML=p.items.map(x=>`<li>${x}</li>`).join("");modalContact.href=contactUrl;modal.hidden=false;document.body.classList.add("modal-open");modal.querySelector(".modal-close").focus()}
+function closeModal(){modal.hidden=true;document.body.classList.remove("modal-open");lastFocus?.focus()}
+document.querySelectorAll("[data-service]").forEach(b=>b.addEventListener("click",()=>openModal(b.dataset.service)));modal?.querySelectorAll("[data-close-modal]").forEach(b=>b.addEventListener("click",closeModal));addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden)closeModal()});
+document.querySelectorAll("details").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)document.querySelectorAll("details").forEach(o=>{if(o!==d)o.open=false})}));document.querySelector("#year").textContent=new Date().getFullYear();
