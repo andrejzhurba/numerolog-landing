@@ -1,0 +1,31 @@
+{
+  "browser": {
+    "mode": "launch",
+    "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "start_url": {
+    "url": "https://kishchuk.com/"
+  },
+  "actions": [
+    {
+      "step_id": "page-ready",
+      "action": "wait_for",
+      "locator": {
+        "kind": "css",
+        "selector": "body"
+      },
+      "state": "visible",
+      "timeout_ms": 20000
+    },
+    {
+      "step_id": "settle",
+      "action": "wait_for_timeout",
+      "duration_ms": 2500
+    }
+  ],
+  "capture": {
+    "at_end": ["dom", "accessibility", "screenshot", "url"],
+    "events": ["console", "page-errors", "network"]
+  },
+  "command_timeout_ms": 30000
+}

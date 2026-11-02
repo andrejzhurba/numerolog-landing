@@ -1,0 +1,50 @@
+{
+  "browser": {
+    "mode": "launch",
+    "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "start_url": {
+    "url": "http://127.0.0.1:4173/"
+  },
+  "actions": [
+    {
+      "step_id": "open-calculator",
+      "action": "click",
+      "locator": { "kind": "role", "role": "link", "name": "Ваше число" },
+      "timeout_ms": 10000
+    },
+    {
+      "step_id": "enter-birthdate",
+      "action": "fill",
+      "locator": { "kind": "css", "selector": "#birthdate" },
+      "value": { "source": "literal", "value": "1990-05-17" },
+      "timeout_ms": 10000
+    },
+    {
+      "step_id": "calculate",
+      "action": "click",
+      "locator": { "kind": "role", "role": "button", "name": "Рассчитать" },
+      "timeout_ms": 10000
+    },
+    {
+      "step_id": "result-ready",
+      "action": "wait_for",
+      "locator": { "kind": "css", "selector": "#number-result" },
+      "state": "visible",
+      "timeout_ms": 10000
+    }
+  ],
+  "capture": {
+    "at_end": ["dom", "accessibility", "screenshot", "url"],
+    "events": ["console", "page-errors", "network"]
+  },
+  "environment": {
+    "viewport": { "width": 1280, "height": 720, "device_scale_factor": 1 },
+    "locale": "ru-RU",
+    "timezone": "Europe/Kiev",
+    "color_scheme": "light",
+    "reduced_motion": "reduce",
+    "service_workers": "block"
+  },
+  "command_timeout_ms": 30000
+}
