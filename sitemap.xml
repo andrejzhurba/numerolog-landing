@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://numerolog-landing.vercel.app/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://numerolog-landing.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://numerolog-landing.vercel.app/about.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/energy-practices.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/school.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/reviews.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/matrix.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/child.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/roadmap-2027.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/compatibility.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/consultation.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/year-support.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/school-base.html</loc></url>
+  <url><loc>https://numerolog-landing.vercel.app/services/school-profi.html</loc></url>
+</urlset>
